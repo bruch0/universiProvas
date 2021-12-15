@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import DropdownInput from '../../Components/Shared/UniversityDropdown';
-import Loading from '../../Components/Shared/Loading';
+import DropdownInput from '../Components/HomeDropdown';
+import Loading from '../Components/Shared/Loading';
 
-import { getUniversities } from '../../Services/api';
-import { storeUniversityInfo } from '../../Services/storage';
+import { getUniversities } from '../Services/api';
+import { storeUniversityInfo } from '../Services/storage';
 
 function Home() {
   const [universities, setUniversities] = useState([]);
