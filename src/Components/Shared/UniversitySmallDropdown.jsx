@@ -57,7 +57,7 @@ const DropdownHolder = styled.div`
   right: 15px;
 
   @media (max-width: 600px) {
-    width: '80%';
+    width: 150px;
   }
 `;
 
@@ -80,6 +80,15 @@ const Dropdown = styled.button`
   svg {
     height: 30px;
     width: 30px;
+  }
+
+  @media (max-width: 600px) {
+    font-size: 15px;
+
+    svg {
+      height: 15px;
+      width: 15px;
+    }
   }
 `;
 
@@ -130,6 +139,10 @@ const Item = styled.li`
   color: #000000;
   cursor: pointer;
   border-top: 2px solid #eaeaea;
+
+  @media (max-width: 600px) {
+    font-size: 15px;
+  }
 `;
 
 export default SmallUniversityDropdown;
