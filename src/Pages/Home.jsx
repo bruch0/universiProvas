@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import DropdownInput from '../Components/Shared/UniversityDropdown';
+import DropdownInput from '../Components/HomeDropdown';
 import Loading from '../Components/Shared/Loading';
 
 import { getUniversities } from '../Services/api';
