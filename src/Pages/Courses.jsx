@@ -78,11 +78,12 @@ const Coursepage = styled.main`
 
 const Title = styled.p`
   font-size: 6vw;
-  margin-top: 30px;
+  margin: 0px 0px 0px 0px;
   font-weight: 700;
 
   @media (max-width: 600px) {
     font-size: 10vw;
+    margin: 20% 0px 0px 0px;
   }
 `;
 
@@ -104,6 +105,10 @@ const UniversityCourses = styled.section`
   gap: 6%;
   margin-top: 5%;
   padding: 0px 5%;
+
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 `;
 
 export default Courses;
