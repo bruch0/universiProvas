@@ -1,8 +1,10 @@
 /* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 
+import AppRoutes from './Routes/Routes';
+
 function App() {
-  return <div className="App">react app</div>;
+  return <AppRoutes />;
 }
 
 export default App;
