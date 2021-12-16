@@ -35,7 +35,7 @@ function Courses() {
   };
 
   return (
-    <Coursepage>
+    <CoursePage>
       <SmallUniversityDropdown />
       <Title>CURSOS</Title>
       <FilterSearch
@@ -47,26 +47,26 @@ function Courses() {
         {filter
           ? filteredCourses.map((course) => (
               <SelectorButton
-                path={course.id}
-                courseName={course.name}
-                type={course.type}
+                path={`${course.id}/professors`}
+                mainInfo={course.name}
+                additionalInfo={course.type}
                 key={course.id}
               />
             ))
           : courses.map((course) => (
               <SelectorButton
-                path={course.id}
-                courseName={course.name}
-                type={course.type}
+                path={`${course.id}/professors`}
+                mainInfo={course.name}
+                additionalInfo={course.type}
                 key={course.id}
               />
             ))}
       </UniversityCourses>
-    </Coursepage>
+    </CoursePage>
   );
 }
 
-const Coursepage = styled.main`
+const CoursePage = styled.main`
   width: 100%;
   height: 100vh;
   display: flex;
@@ -78,7 +78,7 @@ const Coursepage = styled.main`
 
 const Title = styled.p`
   font-size: 6vw;
-  margin: 0px 0px 0px 0px;
+  margin: 30px 0px 0px 0px;
   font-weight: 700;
 
   @media (max-width: 600px) {
