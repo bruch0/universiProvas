@@ -3,52 +3,69 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 
-function DropdownInput({
-  name,
-  handler,
-  state,
-  possibleStates,
-  customWidth = false,
-  customHeigth = false,
-}) {
+function DropdownInput({ handler, possibleStates }) {
   const [enabled, setEnabled] = useState(false);
+  const [filteredPossibleStates, setFilteredPossibleStates] = useState([]);
+  const [filter, setFilter] = useState('');
+
+  const filterCourses = (search) => {
+    setFilter(search);
+    setFilteredPossibleStates(
+      possibleStates.filter((states) =>
+        states.initials.toLowerCase().startsWith(search.toLowerCase())
+      )
+    );
+  };
 
   return (
-    <DropdownHolder customWidth={customWidth}>
-      <Dropdown
-        customHeigth={customHeigth}
-        onClick={() => setEnabled(!enabled)}
-        onBlur={() => setTimeout(() => setEnabled(false), 100)}
-        enabled={enabled ? 1 : 0}
-      >
-        {enabled || !state ? name : state}
+    <DropdownHolder>
+      <Dropdown enabled={enabled ? 1 : 0}>
         {enabled ? <IoIosArrowUp /> : <IoIosArrowDown />}
       </Dropdown>
       <DropdownList enabled={enabled ? 1 : 0}>
-        {possibleStates.map((stateChoice) => (
-          <Item key={stateChoice.initials} onClick={() => handler(stateChoice)}>
-            {stateChoice.initials}
-          </Item>
-        ))}
+        {filter
+          ? filteredPossibleStates.map((stateChoice) => (
+              <Item
+                key={stateChoice.initials}
+                onClick={() => handler(stateChoice)}
+              >
+                {stateChoice.initials}
+              </Item>
+            ))
+          : possibleStates.map((stateChoice) => (
+              <Item
+                key={stateChoice.initials}
+                onClick={() => handler(stateChoice)}
+              >
+                {stateChoice.initials}
+              </Item>
+            ))}
       </DropdownList>
+      <FilterSearch
+        placeholder="Pesquise aqui..."
+        value={filter}
+        onChange={(e) => filterCourses(e.target.value)}
+        onClick={() => setEnabled(!enabled)}
+        onBlur={() => setTimeout(() => setEnabled(false), 100)}
+      />
     </DropdownHolder>
   );
 }
 
 const DropdownHolder = styled.div`
-  width: ${(props) => (props.customWidth ? props.customWidth : '20%')};
+  width: 20%;
   position: relative;
 
   @media (max-width: 600px) {
-    width: ${(props) => (props.customWidth ? props.customWidth : '80%')};
+    width: 80%;
   }
 `;
 
 const Dropdown = styled.button`
   width: 100%;
-  height: ${(props) => (props.customHeigth ? props.customHeigth : '50px')};
+  height: 50px;
   display: flex;
-  justify-content: space-between;
+  justify-content: end;
   align-items: center;
   padding: 0px 10px;
   border: 0px;
@@ -61,8 +78,10 @@ const Dropdown = styled.button`
   box-shadow: 0px 3px 10px rgb(0 0 0 / 25%);
 
   svg {
+    z-index: 1;
     height: 30px;
     width: 30px;
+    pointer-events: none;
   }
 `;
 
@@ -113,6 +132,21 @@ const Item = styled.li`
   color: #000000;
   cursor: pointer;
   border-top: 2px solid #eaeaea;
+`;
+
+const FilterSearch = styled.input`
+  width: 100%;
+  height: 50px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0px 50px 0px 10px;
+  margin: 0px;
+  font-size: 20px;
+  font-family: 'Quicksand';
+  border-radius: 15px;
+  border: 0px;
+  cursor: pointer;
 `;
 
 export default DropdownInput;
