@@ -7,7 +7,8 @@ const api = axios.create({
 
 const getUniversities = () => api.get('/universities');
 
-const getProfessors = (universityId) => api.get(`/professors/${universityId}`);
+const getProfessors = (universityId, courseId) =>
+  api.get(`/professors/${universityId}/${courseId}`);
 
 const getCourses = (universityId) => api.get(`/courses/${universityId}`);
 
