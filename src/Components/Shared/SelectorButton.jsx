@@ -1,13 +1,42 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-function SelectorButton({ path, courseName, type }) {
+function SelectorButton({ path, mainInfo, additionalInfo, hoverInfo }) {
+  const [hovering, setHovering] = useState(false);
+
   return (
-    <Button to={`${path}`}>
-      <p>{courseName}</p>
-      {type ? <p>{type}</p> : ''}
+    <Button
+      onMouseEnter={() => setHovering(hoverInfo !== undefined)}
+      onMouseLeave={() => setHovering(hoverInfo === undefined)}
+      to={`${path}`}
+    >
+      {hoverInfo ? (
+        <>
+          <FrontFace enabled={hovering ? 1 : 0}>
+            <p>{mainInfo}</p>
+            {additionalInfo ? <p>{additionalInfo}</p> : ''}
+          </FrontFace>
+
+          <BackFace enabled={hovering ? 1 : 0}>
+            {hoverInfo ? (
+              <p>
+                {Number(hoverInfo)
+                  ? `${hoverInfo} prova${Number(hoverInfo) > 1 ? 's' : ''}`
+                  : 'Nenhuma prova'}
+              </p>
+            ) : (
+              ''
+            )}
+          </BackFace>
+        </>
+      ) : (
+        <>
+          <p>{mainInfo}</p>
+          {additionalInfo ? <p>{additionalInfo}</p> : ''}
+        </>
+      )}
     </Button>
   );
 }
@@ -17,7 +46,7 @@ export default SelectorButton;
 const Button = styled(Link)`
   width: 100%;
   height: 100px;
-  padding: 15px 0px;
+  padding: 15px 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -29,4 +58,12 @@ const Button = styled(Link)`
   font-size: 18px;
   color: white;
   text-align: center;
+`;
+
+const FrontFace = styled.div`
+  display: ${(props) => (props.enabled ? 'none' : 'flex')};
+`;
+
+const BackFace = styled.div`
+  display: ${(props) => (props.enabled ? 'flex' : 'none')};
 `;
