@@ -8,6 +8,9 @@ import { getUniversityInfo, storeUniversityInfo } from '../../Services/storage';
 
 function SmallUniversityDropdown() {
   const [universities, setUniversities] = useState([]);
+  const [enabled, setEnabled] = useState(false);
+  const [filteredUniversities, setFilteredUniversities] = useState([]);
+  const [filter, setFilter] = useState('');
   const universityInfo = getUniversityInfo();
   const navigate = useNavigate();
 
@@ -18,40 +21,64 @@ function SmallUniversityDropdown() {
   const handleChoice = (choice) => {
     storeUniversityInfo(JSON.stringify(choice));
 
-    if (window.location.pathname === '/courses') {
+    if (
+      window.location.pathname === '/courses' &&
+      choice.initials !== universityInfo.initials
+    ) {
       window.location.reload();
-    } else {
+    } else if (choice.initials !== universityInfo.initials) {
       navigate('/courses');
+    } else {
+      setFilter('');
     }
   };
-  const [enabled, setEnabled] = useState(false);
+
+  const filterCourses = (search) => {
+    setFilter(search);
+    setFilteredUniversities(
+      universities.filter((states) =>
+        states.initials.toLowerCase().startsWith(search.toLowerCase())
+      )
+    );
+  };
 
   return (
     <DropdownHolder>
-      <Dropdown
-        onClick={() => setEnabled(!enabled)}
-        onBlur={() => setTimeout(() => setEnabled(false), 100)}
-        enabled={enabled ? 1 : 0}
-      >
-        {universityInfo.initials}
+      <Dropdown enabled={enabled ? 1 : 0}>
         {enabled ? <IoIosArrowUp /> : <IoIosArrowDown />}
       </Dropdown>
       <DropdownList enabled={enabled ? 1 : 0}>
-        {universities.map((stateChoice) => (
-          <Item
-            key={stateChoice.initials}
-            onClick={() => handleChoice(stateChoice)}
-          >
-            {stateChoice.initials}
-          </Item>
-        ))}
+        {filter
+          ? filteredUniversities.map((stateChoice) => (
+              <Item
+                key={stateChoice.initials}
+                onClick={() => handleChoice(stateChoice)}
+              >
+                {stateChoice.initials}
+              </Item>
+            ))
+          : universities.map((stateChoice) => (
+              <Item
+                key={stateChoice.initials}
+                onClick={() => handleChoice(stateChoice)}
+              >
+                {stateChoice.initials}
+              </Item>
+            ))}
       </DropdownList>
+      <FilterSearch
+        placeholder={universityInfo.initials}
+        value={filter}
+        onChange={(e) => filterCourses(e.target.value)}
+        onClick={() => setEnabled(!enabled)}
+        onBlur={() => setTimeout(() => setEnabled(false), 100)}
+      />
     </DropdownHolder>
   );
 }
 
 const DropdownHolder = styled.div`
-  width: 120px;
+  width: 150px;
   position: absolute;
   top: 15px;
   right: 15px;
@@ -65,7 +92,7 @@ const Dropdown = styled.button`
   width: 100%;
   height: 50px;
   display: flex;
-  justify-content: space-between;
+  justify-content: end;
   align-items: center;
   padding: 0px 10px;
   border: 0px;
@@ -80,6 +107,8 @@ const Dropdown = styled.button`
   svg {
     height: 30px;
     width: 30px;
+    z-index: 2;
+    pointer-events: none;
   }
 
   @media (max-width: 600px) {
@@ -98,7 +127,7 @@ const DropdownList = styled.ul`
   overflow-y: scroll;
   position: absolute;
   top: 50px;
-  z-index: 1;
+  z-index: 2;
   display: ${(props) => (props.enabled ? 'flex' : 'none')};
   flex-direction: column;
   justify-content: space-between;
@@ -106,7 +135,7 @@ const DropdownList = styled.ul`
   padding: 0px 10px;
   border-radius: 0px 0px 10px 10px;
   background-color: #ffffff;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   box-shadow: 0px 8px 10px rgb(0 0 0 / 25%);
 
@@ -142,6 +171,38 @@ const Item = styled.li`
 
   @media (max-width: 600px) {
     font-size: 15px;
+  }
+`;
+
+const FilterSearch = styled.input`
+  width: 100%;
+  height: 50px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0px 50px 0px 10px;
+  margin: 0px;
+  font-size: 15px;
+  font-family: 'Quicksand';
+  border-radius: 15px;
+  border: 0px;
+  cursor: pointer;
+  color: #000000;
+  font-weight: 700;
+
+  ::-webkit-input-placeholder {
+    color: #000000;
+    font-weight: 700;
+  }
+
+  :-ms-input-placeholder {
+    color: #000000;
+    font-weight: 700;
+  }
+
+  ::placeholder {
+    color: #000000;
+    font-weight: 700;
   }
 `;
 

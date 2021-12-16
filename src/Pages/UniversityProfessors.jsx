@@ -1,24 +1,29 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Loading from '../Components/Shared/Loading';
 import SmallUniversityDropdown from '../Components/Shared/UniversitySmallDropdown';
+import SmallTestFilter from '../Components/Shared/FilterSmallDropdown';
 import SelectorButton from '../Components/Shared/SelectorButton';
 
-import { getCourses } from '../Services/api';
+import { getProfessors } from '../Services/api';
 import { getUniversityInfo } from '../Services/storage';
 
-function Courses() {
-  const [courses, setCourses] = useState([]);
-  const [filteredCourses, setFilteredCourses] = useState([]);
+function Professors() {
+  const [professors, setProfessors] = useState([]);
+  const [filteredProfessors, setFilteredProfessors] = useState([]);
   const [filter, setFilter] = useState('');
+  const [courseName, setCourseName] = useState('');
   const [loading, setLoading] = useState(true);
   const { id } = getUniversityInfo();
+  const { courseId } = useParams();
 
   useEffect(() => {
-    getCourses(id).then((response) => {
-      setCourses(response.data);
-      setFilteredCourses(response.data);
+    getProfessors(id, courseId).then((response) => {
+      setProfessors(response.data.professors);
+      setFilteredProfessors(response.data.professors);
+      setCourseName(response.data.course.toUpperCase());
       setLoading(false);
     });
   }, []);
@@ -27,17 +32,18 @@ function Courses() {
 
   const filterCourses = (search) => {
     setFilter(search);
-    setFilteredCourses(
-      courses.filter((course) =>
-        course.name.toLowerCase().startsWith(search.toLowerCase())
+    setFilteredProfessors(
+      professors.filter((professor) =>
+        professor.name.toLowerCase().startsWith(search.toLowerCase())
       )
     );
   };
 
   return (
-    <CoursePage>
+    <ProfessorsPage>
       <SmallUniversityDropdown />
-      <Title>CURSOS</Title>
+      <SmallTestFilter />
+      <Title>{courseName}</Title>
       <FilterSearch
         placeholder="Pesquise aqui..."
         value={filter}
@@ -45,28 +51,32 @@ function Courses() {
       />
       <UniversityCourses>
         {filter
-          ? filteredCourses.map((course) => (
+          ? filteredProfessors.map((course) => (
               <SelectorButton
                 path={`${course.id}/professors`}
                 mainInfo={course.name}
                 additionalInfo={course.type}
                 key={course.id}
+                hoverInfo={course.totalTests}
               />
             ))
-          : courses.map((course) => (
+          : professors.map((course) => (
               <SelectorButton
                 path={`${course.id}/professors`}
                 mainInfo={course.name}
                 additionalInfo={course.type}
                 key={course.id}
+                hoverInfo={course.totalTests}
               />
             ))}
       </UniversityCourses>
-    </CoursePage>
+    </ProfessorsPage>
   );
 }
 
-const CoursePage = styled.main`
+export default Professors;
+
+const ProfessorsPage = styled.main`
   width: 100%;
   height: 100vh;
   display: flex;
@@ -80,6 +90,7 @@ const Title = styled.p`
   font-size: 6vw;
   margin: 30px 0px 0px 0px;
   font-weight: 700;
+  text-align: center;
 
   @media (max-width: 600px) {
     font-size: 10vw;
@@ -110,5 +121,3 @@ const UniversityCourses = styled.section`
     grid-template-columns: repeat(2, 1fr);
   }
 `;
-
-export default Courses;
