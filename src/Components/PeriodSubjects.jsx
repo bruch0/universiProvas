@@ -14,6 +14,7 @@ function PeriodSubjects({ period }) {
             mainInfo={subject.name}
             additionalInfo={subject.code}
             hoverInfo={subject.totalTests}
+            key={subject.code}
           />
         ))}
       </UniversityCourses>
