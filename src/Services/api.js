@@ -12,4 +12,7 @@ const getProfessors = (universityId, courseId) =>
 
 const getCourses = (universityId) => api.get(`/courses/${universityId}`);
 
-export { getUniversities, getProfessors, getCourses };
+const getCouseSubject = (universityId, courseId) =>
+  api.get(`/subjects/${universityId}/${courseId}`);
+
+export { getUniversities, getProfessors, getCourses, getCouseSubject };
