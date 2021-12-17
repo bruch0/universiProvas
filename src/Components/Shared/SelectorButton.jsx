@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -47,6 +46,7 @@ const Button = styled(Link)`
   width: 100%;
   height: 100px;
   padding: 15px 10px;
+  margin-bottom: 30px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -61,7 +61,11 @@ const Button = styled(Link)`
 `;
 
 const FrontFace = styled.div`
+  width: 100%;
+  height: 100%;
   display: ${(props) => (props.enabled ? 'none' : 'flex')};
+  flex-direction: column;
+  justify-content: space-around;
 `;
 
 const BackFace = styled.div`
