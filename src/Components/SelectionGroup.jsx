@@ -48,7 +48,7 @@ const UniversityCourses = styled.section`
   grid-template-columns: repeat(4, 1fr);
   gap: 6%;
   margin-top: 2%;
-  padding: 0px 5%;
+  padding: 0px;
 
   @media (max-width: 600px) {
     grid-template-columns: repeat(2, 1fr);
