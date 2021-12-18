@@ -49,27 +49,27 @@ function Professors() {
         value={filter}
         onChange={(e) => filterCourses(e.target.value)}
       />
-      <UniversityCourses>
+      <CourseProfessors>
         {filter
-          ? filteredProfessors.map((course) => (
+          ? filteredProfessors.map((professor) => (
               <SelectorButton
-                path={`${course.id}/professors`}
-                mainInfo={course.name}
-                additionalInfo={course.type}
-                key={course.id}
-                hoverInfo={course.totalTests}
+                path={`${professor.id}`}
+                mainInfo={professor.name}
+                additionalInfo={professor.type}
+                key={professor.id}
+                hoverInfo={professor.totalTests}
               />
             ))
-          : professors.map((course) => (
+          : professors.map((professor) => (
               <SelectorButton
-                path={`${course.id}/professors`}
-                mainInfo={course.name}
-                additionalInfo={course.type}
-                key={course.id}
-                hoverInfo={course.totalTests}
+                path={`${professor.id}`}
+                mainInfo={professor.name}
+                additionalInfo={professor.type}
+                key={professor.id}
+                hoverInfo={professor.totalTests}
               />
             ))}
-      </UniversityCourses>
+      </CourseProfessors>
     </ProfessorsPage>
   );
 }
@@ -110,7 +110,7 @@ const FilterSearch = styled.input`
   border: 0px;
 `;
 
-const UniversityCourses = styled.section`
+const CourseProfessors = styled.section`
   width: 100%;
   display: grid;
   grid-template-columns: repeat(4, 1fr);

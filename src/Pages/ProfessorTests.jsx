@@ -7,23 +7,21 @@ import SmallUniversityDropdown from '../Components/Shared/UniversitySmallDropdow
 import SmallTestFilter from '../Components/Shared/FilterSmallDropdown';
 import PeriodSubjects from '../Components/SelectionGroup';
 
-import { getCouseSubject } from '../Services/api';
-import { getUniversityInfo } from '../Services/storage';
+import { getProfessorsTests } from '../Services/api';
 
-function CourseSubjects() {
-  const [periodSubjects, setPeriodSubjects] = useState([]);
-  const [filteredPeriodSubjects, setFilteredPeriodSubjects] = useState([]);
+function ProfessorTests() {
+  const [professorTests, setProfessorTests] = useState([]);
+  const [filteredProfessorTests, setFilteredProfessorTests] = useState([]);
   const [filter, setFilter] = useState('');
-  const [courseName, setCourseName] = useState('');
+  const [professorName, setProfessorName] = useState('');
   const [loading, setLoading] = useState(true);
-  const { id } = getUniversityInfo();
-  const { courseId } = useParams();
+  const { professorId } = useParams();
 
   useEffect(() => {
-    getCouseSubject(id, courseId).then((response) => {
-      setPeriodSubjects(response.data.subjects);
-      setFilteredPeriodSubjects(response.data.subjects);
-      setCourseName(response.data.course.toUpperCase());
+    getProfessorsTests(professorId).then((response) => {
+      setProfessorTests(response.data.tests);
+      setFilteredProfessorTests(response.data.subjects);
+      setProfessorName(response.data.professor.toUpperCase());
       setLoading(false);
     });
   }, []);
@@ -34,7 +32,7 @@ function CourseSubjects() {
     const filtered = [];
     setFilter(search);
 
-    periodSubjects.forEach((period) => {
+    professorTests.forEach((period) => {
       const auxFilter = [];
 
       period.subjects.forEach((subject) => {
@@ -50,39 +48,32 @@ function CourseSubjects() {
         filtered.push({ period: period.period, subjects: auxFilter });
       }
     });
-    setFilteredPeriodSubjects(filtered);
+
+    setFilteredProfessorTests(filtered);
   };
 
   return (
     <ProfessorsPage>
       <SmallUniversityDropdown />
       <SmallTestFilter />
-      <Title>{courseName}</Title>
+      <Title>{professorName}</Title>
       <FilterSearch
         placeholder="Pesquise aqui..."
         value={filter}
         onChange={(e) => filterSubjects(e.target.value)}
       />
       {filter
-        ? filteredPeriodSubjects.map((period) => (
-            <PeriodSubjects
-              info={period}
-              key={period.period}
-              complement="º semestre"
-            />
+        ? filteredProfessorTests.map((type) => (
+            <PeriodSubjects info={type} key={type.type} complement="" />
           ))
-        : periodSubjects.map((period) => (
-            <PeriodSubjects
-              info={period}
-              key={period.period}
-              complement="º semestre"
-            />
+        : professorTests.map((type) => (
+            <PeriodSubjects info={type} key={type.type} complement="" />
           ))}
     </ProfessorsPage>
   );
 }
 
-export default CourseSubjects;
+export default ProfessorTests;
 
 const ProfessorsPage = styled.main`
   width: 100%;

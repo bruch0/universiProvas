@@ -2,14 +2,26 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-function SelectorButton({ path, mainInfo, additionalInfo, hoverInfo }) {
+function SelectorButton({ path, mainInfo, additionalInfo, hoverInfo, action }) {
   const [hovering, setHovering] = useState(false);
+
+  let hover;
+
+  if (Number(hoverInfo)) {
+    hover =
+      Number(hoverInfo) > 1
+        ? `${hoverInfo} prova${Number(hoverInfo) > 1 ? 's' : ''}`
+        : 'Nenhuma prova';
+  } else {
+    hover = hoverInfo;
+  }
 
   return (
     <Button
       onMouseEnter={() => setHovering(hoverInfo !== undefined)}
       onMouseLeave={() => setHovering(hoverInfo === undefined)}
       to={`${path}`}
+      onClick={action}
     >
       {hoverInfo ? (
         <>
@@ -18,17 +30,7 @@ function SelectorButton({ path, mainInfo, additionalInfo, hoverInfo }) {
             {additionalInfo ? <p>{additionalInfo}</p> : ''}
           </FrontFace>
 
-          <BackFace enabled={hovering ? 1 : 0}>
-            {hoverInfo ? (
-              <p>
-                {Number(hoverInfo)
-                  ? `${hoverInfo} prova${Number(hoverInfo) > 1 ? 's' : ''}`
-                  : 'Nenhuma prova'}
-              </p>
-            ) : (
-              ''
-            )}
-          </BackFace>
+          <BackFace enabled={hovering ? 1 : 0}>{hover}</BackFace>
         </>
       ) : (
         <>
