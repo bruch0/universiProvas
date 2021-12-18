@@ -7,7 +7,7 @@ import SmallUniversityDropdown from '../Components/Shared/UniversitySmallDropdow
 import SmallTestFilter from '../Components/Shared/FilterSmallDropdown';
 import PeriodSubjects from '../Components/SelectionGroup';
 
-import { getCouseSubject } from '../Services/api';
+import { getCourseSubjects } from '../Services/api';
 import { getUniversityInfo } from '../Services/storage';
 
 function CourseSubjects() {
@@ -20,7 +20,7 @@ function CourseSubjects() {
   const { courseId } = useParams();
 
   useEffect(() => {
-    getCouseSubject(id, courseId).then((response) => {
+    getCourseSubjects(id, courseId).then((response) => {
       setPeriodSubjects(response.data.subjects);
       setFilteredPeriodSubjects(response.data.subjects);
       setCourseName(response.data.course.toUpperCase());
