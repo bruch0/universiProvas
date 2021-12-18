@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Loading from '../Components/Shared/Loading';
 import SmallUniversityDropdown from '../Components/Shared/UniversitySmallDropdown';
 import SmallTestFilter from '../Components/Shared/FilterSmallDropdown';
-import PeriodSubjects from '../Components/PeriodSubjects';
+import PeriodSubjects from '../Components/SelectionGroup';
 
 import { getCouseSubject } from '../Services/api';
 import { getUniversityInfo } from '../Services/storage';
@@ -65,10 +65,18 @@ function CourseSubjects() {
       />
       {filter
         ? filteredPeriodSubjects.map((period) => (
-            <PeriodSubjects period={period} key={period.period} />
+            <PeriodSubjects
+              info={period}
+              key={period.period}
+              complement="º semestre"
+            />
           ))
         : periodSubjects.map((period) => (
-            <PeriodSubjects period={period} key={period.period} />
+            <PeriodSubjects
+              info={period}
+              key={period.period}
+              complement="º semestre"
+            />
           ))}
     </ProfessorsPage>
   );
