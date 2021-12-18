@@ -11,7 +11,7 @@ function SelectionGroup({ info, complement }) {
         {info.subjects
           ? info.subjects.map((subject) => (
               <SelectorButton
-                path="/"
+                path={subject.id}
                 mainInfo={subject.name}
                 additionalInfo={subject.code}
                 hoverInfo={subject.totalTests}
@@ -22,6 +22,7 @@ function SelectionGroup({ info, complement }) {
               <SelectorButton
                 path=""
                 mainInfo={test.period}
+                additionalInfo={test.professor || ''}
                 hoverInfo="Abrir"
                 key={test.url}
                 action={() => window.open(test.url)}
