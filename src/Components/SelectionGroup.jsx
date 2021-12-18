@@ -11,7 +11,7 @@ function SelectionGroup({ info, complement }) {
         {info.subjects
           ? info.subjects.map((subject) => (
               <SelectorButton
-                path="/"
+                path={subject.id}
                 mainInfo={subject.name}
                 additionalInfo={subject.code}
                 hoverInfo={subject.totalTests}
@@ -22,6 +22,7 @@ function SelectionGroup({ info, complement }) {
               <SelectorButton
                 path=""
                 mainInfo={test.period}
+                additionalInfo={test.professor || ''}
                 hoverInfo="Abrir"
                 key={test.url}
                 action={() => window.open(test.url)}
@@ -48,7 +49,7 @@ const UniversityCourses = styled.section`
   grid-template-columns: repeat(4, 1fr);
   gap: 6%;
   margin-top: 2%;
-  padding: 0px 5%;
+  padding: 0px;
 
   @media (max-width: 600px) {
     grid-template-columns: repeat(2, 1fr);

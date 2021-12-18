@@ -7,21 +7,23 @@ import SmallUniversityDropdown from '../Components/Shared/UniversitySmallDropdow
 import SmallTestFilter from '../Components/Shared/FilterSmallDropdown';
 import PeriodSubjects from '../Components/SelectionGroup';
 
-import { getProfessorsTests } from '../Services/api';
+import { getCourseSubjects } from '../Services/api';
+import { getUniversityInfo } from '../Services/storage';
 
-function ProfessorTests() {
-  const [professorTests, setProfessorTests] = useState([]);
-  const [filteredProfessorTests, setFilteredProfessorTests] = useState([]);
+function CourseSubjects() {
+  const [periodSubjects, setPeriodSubjects] = useState([]);
+  const [filteredPeriodSubjects, setFilteredPeriodSubjects] = useState([]);
   const [filter, setFilter] = useState('');
-  const [professorName, setProfessorName] = useState('');
+  const [courseName, setCourseName] = useState('');
   const [loading, setLoading] = useState(true);
-  const { professorId } = useParams();
+  const { id } = getUniversityInfo();
+  const { courseId } = useParams();
 
   useEffect(() => {
-    getProfessorsTests(professorId).then((response) => {
-      setProfessorTests(response.data.tests);
-      setFilteredProfessorTests(response.data.tests);
-      setProfessorName(response.data.professor.toUpperCase());
+    getCourseSubjects(id, courseId).then((response) => {
+      setPeriodSubjects(response.data.subjects);
+      setFilteredPeriodSubjects(response.data.subjects);
+      setCourseName(response.data.course.toUpperCase());
       setLoading(false);
     });
   }, []);
@@ -32,45 +34,55 @@ function ProfessorTests() {
     const filtered = [];
     setFilter(search);
 
-    professorTests.forEach((period) => {
+    periodSubjects.forEach((period) => {
       const auxFilter = [];
 
-      period.tests.forEach((test) => {
-        if (test.period.toLowerCase().startsWith(search.toLowerCase())) {
-          auxFilter.push(test);
+      period.subjects.forEach((subject) => {
+        if (
+          subject.name.toLowerCase().startsWith(search.toLowerCase()) ||
+          subject.code.toLowerCase().startsWith(search.toLowerCase())
+        ) {
+          auxFilter.push(subject);
         }
       });
 
       if (auxFilter.length) {
-        filtered.push({ period: period.type, tests: auxFilter });
+        filtered.push({ period: period.period, subjects: auxFilter });
       }
     });
-
-    setFilteredProfessorTests(filtered);
+    setFilteredPeriodSubjects(filtered);
   };
 
   return (
     <ProfessorsPage>
       <SmallUniversityDropdown />
       <SmallTestFilter />
-      <Title>{professorName}</Title>
+      <Title>{courseName}</Title>
       <FilterSearch
         placeholder="Pesquise aqui..."
         value={filter}
         onChange={(e) => filterSubjects(e.target.value)}
       />
       {filter
-        ? filteredProfessorTests.map((type) => (
-            <PeriodSubjects info={type} key={type.period} complement="" />
+        ? filteredPeriodSubjects.map((period) => (
+            <PeriodSubjects
+              info={period}
+              key={period.period}
+              complement="º semestre"
+            />
           ))
-        : professorTests.map((type) => (
-            <PeriodSubjects info={type} key={type.period} complement="" />
+        : periodSubjects.map((period) => (
+            <PeriodSubjects
+              info={period}
+              key={period.period}
+              complement="º semestre"
+            />
           ))}
     </ProfessorsPage>
   );
 }
 
-export default ProfessorTests;
+export default CourseSubjects;
 
 const ProfessorsPage = styled.main`
   width: 100%;
