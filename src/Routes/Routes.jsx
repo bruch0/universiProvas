@@ -5,6 +5,7 @@ import GlobalStyle from '../Shared/GlobalStyles';
 import Home from '../Pages/Home';
 import Courses from '../Pages/Courses';
 import Professors from '../Pages/CouseProfessors';
+import ProfessorTests from '../Pages/ProfessorTests';
 import CourseSubjects from '../Pages/CouseSubjects';
 
 function AppRoutes() {
@@ -15,6 +16,10 @@ function AppRoutes() {
         <Route path="/" element={<Home />} />
         <Route path="/courses" element={<Courses />} />
         <Route path="/courses/:courseId/professors" element={<Professors />} />
+        <Route
+          path="/courses/:courseId/professors/:professorId"
+          element={<ProfessorTests />}
+        />
         <Route
           path="/courses/:courseId/subjects"
           element={<CourseSubjects />}
