@@ -20,7 +20,7 @@ function ProfessorTests() {
   useEffect(() => {
     getProfessorsTests(professorId).then((response) => {
       setProfessorTests(response.data.tests);
-      setFilteredProfessorTests(response.data.subjects);
+      setFilteredProfessorTests(response.data.tests);
       setProfessorName(response.data.professor.toUpperCase());
       setLoading(false);
     });
@@ -35,17 +35,14 @@ function ProfessorTests() {
     professorTests.forEach((period) => {
       const auxFilter = [];
 
-      period.subjects.forEach((subject) => {
-        if (
-          subject.name.toLowerCase().startsWith(search.toLowerCase()) ||
-          subject.code.toLowerCase().startsWith(search.toLowerCase())
-        ) {
-          auxFilter.push(subject);
+      period.tests.forEach((test) => {
+        if (test.period.toLowerCase().startsWith(search.toLowerCase())) {
+          auxFilter.push(test);
         }
       });
 
       if (auxFilter.length) {
-        filtered.push({ period: period.period, subjects: auxFilter });
+        filtered.push({ period: period.type, tests: auxFilter });
       }
     });
 
@@ -64,10 +61,10 @@ function ProfessorTests() {
       />
       {filter
         ? filteredProfessorTests.map((type) => (
-            <PeriodSubjects info={type} key={type.type} complement="" />
+            <PeriodSubjects info={type} key={type.period} complement="" />
           ))
         : professorTests.map((type) => (
-            <PeriodSubjects info={type} key={type.type} complement="" />
+            <PeriodSubjects info={type} key={type.period} complement="" />
           ))}
     </ProfessorsPage>
   );
