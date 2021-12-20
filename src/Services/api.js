@@ -1,5 +1,11 @@
 import axios from 'axios';
 
+const multiFormConfig = {
+  headers: {
+    'content-type': 'multipart/form-data',
+  },
+};
+
 const api = axios.create({
   baseURL:
     process.env.NODE_ENV === 'production' ? '' : 'http://localhost:4000/',
@@ -21,6 +27,10 @@ const getCourseSubjects = (universityId, courseId) =>
 const getSubjectTests = (universityId, subjectId) =>
   api.get(`/subjects/${universityId}/${subjectId}/tests`);
 
+const getPostTestInfo = () => api.get('/tests');
+
+const uploadTest = (data) => api.post('/tests', data, multiFormConfig);
+
 export {
   getUniversities,
   getCourses,
@@ -28,4 +38,6 @@ export {
   getProfessorsTests,
   getCourseSubjects,
   getSubjectTests,
+  getPostTestInfo,
+  uploadTest,
 };

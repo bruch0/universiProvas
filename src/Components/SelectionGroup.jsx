@@ -23,7 +23,7 @@ function SelectionGroup({ info, complement }) {
                 path=""
                 mainInfo={test.period}
                 additionalInfo={test.professor || ''}
-                hoverInfo="Abrir"
+                hoverInfo="Baixar"
                 key={test.url}
                 action={() => window.open(test.url)}
               />
