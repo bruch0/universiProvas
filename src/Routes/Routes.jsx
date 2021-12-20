@@ -8,6 +8,7 @@ import Professors from '../Pages/CourseProfessors';
 import ProfessorTests from '../Pages/ProfessorTests';
 import CourseSubjects from '../Pages/CourseSubjects';
 import SubjectTests from '../Pages/SubjectsTests';
+import SubmitTest from '../Pages/SubmitTest';
 
 function AppRoutes() {
   return (
@@ -29,6 +30,7 @@ function AppRoutes() {
           path="/courses/:courseId/subjects/:subjectId"
           element={<SubjectTests />}
         />
+        <Route path="/tests" element={<SubmitTest />} />
       </Routes>
     </BrowserRouter>
   );
