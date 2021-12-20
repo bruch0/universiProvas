@@ -83,8 +83,8 @@ const DropdownHolder = styled.div`
   top: 15px;
   right: 15px;
 
-  @media (max-width: 600px) {
-    width: 150px;
+  @media (max-width: 400px) {
+    width: 40%;
   }
 `;
 

@@ -56,6 +56,10 @@ const DropdownHolder = styled.div`
     top: 15px;
     left: 15px;
   }
+
+  @media (max-width: 400px) {
+    width: 40%;
+  }
 `;
 
 const Dropdown = styled.button`
