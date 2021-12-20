@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Loading from '../Components/Shared/Loading';
 import SmallUniversityDropdown from '../Components/Shared/UniversitySmallDropdown';
 import SmallTestFilter from '../Components/Shared/FilterSmallDropdown';
 import PeriodSubjects from '../Components/SelectionGroup';
+import BottomButtons from '../Components/Shared/BottomButtons';
 
 import { getCourseSubjects } from '../Services/api';
 import { getUniversityInfo } from '../Services/storage';
@@ -18,14 +19,24 @@ function CourseSubjects() {
   const [loading, setLoading] = useState(true);
   const { id } = getUniversityInfo();
   const { courseId } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    getCourseSubjects(id, courseId).then((response) => {
-      setPeriodSubjects(response.data.subjects);
-      setFilteredPeriodSubjects(response.data.subjects);
-      setCourseName(response.data.course.toUpperCase());
-      setLoading(false);
-    });
+    if (
+      !id ||
+      !courseId ||
+      Boolean(Number(courseId < 1)) ||
+      Boolean(Number.isNaN(Number(courseId)))
+    ) {
+      navigate('/courses');
+    } else {
+      getCourseSubjects(id, courseId).then((response) => {
+        setPeriodSubjects(response.data.subjects);
+        setFilteredPeriodSubjects(response.data.subjects);
+        setCourseName(response.data.course.toUpperCase());
+        setLoading(false);
+      });
+    }
   }, []);
 
   if (loading) return <Loading />;
@@ -78,6 +89,7 @@ function CourseSubjects() {
               complement="º semestre"
             />
           ))}
+      <BottomButtons />
     </ProfessorsPage>
   );
 }
@@ -104,6 +116,10 @@ const Title = styled.p`
   @media (max-width: 600px) {
     font-size: 10vw;
     margin: 20% 0px 0px 0px;
+  }
+
+  @media (max-width: 400px) {
+    margin-top: 25%;
   }
 `;
 
