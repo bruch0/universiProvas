@@ -38,6 +38,7 @@ export default SelectionGroup;
 const Period = styled.section`
   width: 100%;
   padding: 0px 5%;
+  min-height: 100vw;
   margin-top: 30px;
   font-size: 30px;
   font-weight: 500;

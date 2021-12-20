@@ -129,6 +129,7 @@ const FilterSearch = styled.input`
 const CourseProfessors = styled.section`
   width: 100%;
   display: grid;
+  min-height: 100vw;
   grid-template-columns: repeat(4, 1fr);
   gap: 6%;
   margin-top: 5%;
