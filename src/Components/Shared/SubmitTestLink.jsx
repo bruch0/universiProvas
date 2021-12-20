@@ -24,14 +24,18 @@ const Button = styled(Link)`
   color: white;
   text-align: center;
   position: absolute;
-  bottom: 15px;
-  right: 15px;
+  top: 105px;
+  left: 15px;
   z-index: 3;
 
   @media (max-width: 600px) {
     width: 45%;
     height: 50px;
     font-size: 14px;
+    left: unset;
+    top: unset;
+    bottom: 15px;
+    right: 15px;
   }
 
   @media (max-width: 400px) {

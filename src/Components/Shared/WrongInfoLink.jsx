@@ -31,8 +31,8 @@ const Button = styled(Link)`
   color: white;
   text-align: center;
   position: absolute;
-  bottom: 105px;
-  right: 15px;
+  top: 15px;
+  left: 15px;
   z-index: 3;
 
   @media (max-width: 600px) {
@@ -42,6 +42,7 @@ const Button = styled(Link)`
     bottom: 15px;
     left: 15px;
     right: unset;
+    top: unset;
   }
 
   @media (max-width: 400px) {

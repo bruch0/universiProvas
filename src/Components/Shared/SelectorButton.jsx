@@ -7,7 +7,7 @@ function SelectorButton({ path, mainInfo, additionalInfo, hoverInfo, action }) {
 
   let hover;
 
-  if (Number(hoverInfo)) {
+  if (!Number.isNaN(Number(hoverInfo))) {
     hover =
       Number(hoverInfo) > 1
         ? `${hoverInfo} prova${Number(hoverInfo) > 1 ? 's' : ''}`
