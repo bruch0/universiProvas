@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import BottomButtons from '../Components/Shared/BottomButtons';
 
 import Loading from '../Components/Shared/Loading';
 import SmallUniversityDropdown from '../Components/Shared/UniversitySmallDropdown';
@@ -14,13 +16,18 @@ function Courses() {
   const [filter, setFilter] = useState('');
   const [loading, setLoading] = useState(true);
   const { id } = getUniversityInfo();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    getCourses(id).then((response) => {
-      setCourses(response.data);
-      setFilteredCourses(response.data);
-      setLoading(false);
-    });
+    if (!id || Boolean(Number(id < 1)) || Boolean(Number.isNaN(Number(id)))) {
+      navigate(`/`);
+    } else {
+      getCourses(id).then((response) => {
+        setCourses(response.data);
+        setFilteredCourses(response.data);
+        setLoading(false);
+      });
+    }
   }, []);
 
   if (loading) return <Loading />;
@@ -62,6 +69,7 @@ function Courses() {
               />
             ))}
       </UniversityCourses>
+      <BottomButtons />
     </CoursePage>
   );
 }
@@ -84,6 +92,10 @@ const Title = styled.p`
   @media (max-width: 600px) {
     font-size: 10vw;
     margin: 20% 0px 0px 0px;
+  }
+
+  @media (max-width: 400px) {
+    margin-top: 25%;
   }
 `;
 

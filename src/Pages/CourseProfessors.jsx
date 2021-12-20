@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Loading from '../Components/Shared/Loading';
 import SmallUniversityDropdown from '../Components/Shared/UniversitySmallDropdown';
 import SmallTestFilter from '../Components/Shared/FilterSmallDropdown';
 import SelectorButton from '../Components/Shared/SelectorButton';
+import BottomButtons from '../Components/Shared/BottomButtons';
 
 import { getProfessors } from '../Services/api';
 import { getUniversityInfo } from '../Services/storage';
@@ -16,16 +17,26 @@ function Professors() {
   const [filter, setFilter] = useState('');
   const [courseName, setCourseName] = useState('');
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   const { id } = getUniversityInfo();
   const { courseId } = useParams();
 
   useEffect(() => {
-    getProfessors(id, courseId).then((response) => {
-      setProfessors(response.data.professors);
-      setFilteredProfessors(response.data.professors);
-      setCourseName(response.data.course.toUpperCase());
-      setLoading(false);
-    });
+    if (
+      !id ||
+      !courseId ||
+      Boolean(Number(courseId < 1)) ||
+      Boolean(Number.isNaN(Number(courseId)))
+    ) {
+      navigate('/courses');
+    } else {
+      getProfessors(id, courseId).then((response) => {
+        setProfessors(response.data.professors);
+        setFilteredProfessors(response.data.professors);
+        setCourseName(response.data.course.toUpperCase());
+        setLoading(false);
+      });
+    }
   }, []);
 
   if (loading) return <Loading />;
@@ -70,6 +81,7 @@ function Professors() {
               />
             ))}
       </CourseProfessors>
+      <BottomButtons />
     </ProfessorsPage>
   );
 }
@@ -96,6 +108,10 @@ const Title = styled.p`
   @media (max-width: 600px) {
     font-size: 10vw;
     margin: 20% 0px 0px 0px;
+  }
+
+  @media (max-width: 400px) {
+    margin-top: 25%;
   }
 `;
 

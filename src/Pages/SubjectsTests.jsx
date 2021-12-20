@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Loading from '../Components/Shared/Loading';
 import SmallUniversityDropdown from '../Components/Shared/UniversitySmallDropdown';
 import SmallTestFilter from '../Components/Shared/FilterSmallDropdown';
 import PeriodSubjects from '../Components/SelectionGroup';
+import BottomButtons from '../Components/Shared/BottomButtons';
 
 import { getSubjectTests } from '../Services/api';
 import { getUniversityInfo } from '../Services/storage';
@@ -16,16 +17,26 @@ function SubjectTests() {
   const [filter, setFilter] = useState('');
   const [SubjectName, setSubjectName] = useState('');
   const [loading, setLoading] = useState(true);
-  const { subjectId } = useParams();
+  const { subjectId, courseId } = useParams();
   const { id } = getUniversityInfo();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    getSubjectTests(id, subjectId).then((response) => {
-      setSubjectTests(response.data.tests);
-      setFilteredSubjectTests(response.data.tests);
-      setSubjectName(response.data.subject.toUpperCase());
-      setLoading(false);
-    });
+    if (
+      !id ||
+      !subjectId ||
+      Boolean(Number(subjectId < 1)) ||
+      Boolean(Number.isNaN(Number(subjectId)))
+    ) {
+      navigate(`/courses/${courseId}/subjects`);
+    } else {
+      getSubjectTests(id, subjectId).then((response) => {
+        setSubjectTests(response.data.tests);
+        setFilteredSubjectTests(response.data.tests);
+        setSubjectName(response.data.subject.toUpperCase());
+        setLoading(false);
+      });
+    }
   }, []);
 
   if (loading) return <Loading />;
@@ -63,11 +74,12 @@ function SubjectTests() {
       />
       {filter
         ? filteredSubjectTests.map((type) => (
-            <PeriodSubjects info={type} key={type.period} complement="" />
+            <PeriodSubjects info={type} key={type.type} complement="" />
           ))
         : subjectTests.map((type) => (
-            <PeriodSubjects info={type} key={type.period} complement="" />
+            <PeriodSubjects info={type} key={type.type} complement="" />
           ))}
+      <BottomButtons />
     </ProfessorsPage>
   );
 }

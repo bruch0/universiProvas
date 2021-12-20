@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Loading from '../Components/Shared/Loading';
 import SmallUniversityDropdown from '../Components/Shared/UniversitySmallDropdown';
 import SmallTestFilter from '../Components/Shared/FilterSmallDropdown';
 import PeriodSubjects from '../Components/SelectionGroup';
+import BottomButtons from '../Components/Shared/BottomButtons';
 
 import { getProfessorsTests } from '../Services/api';
 
@@ -15,15 +16,24 @@ function ProfessorTests() {
   const [filter, setFilter] = useState('');
   const [professorName, setProfessorName] = useState('');
   const [loading, setLoading] = useState(true);
-  const { professorId } = useParams();
+  const { professorId, courseId } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    getProfessorsTests(professorId).then((response) => {
-      setProfessorTests(response.data.tests);
-      setFilteredProfessorTests(response.data.tests);
-      setProfessorName(response.data.professor.toUpperCase());
-      setLoading(false);
-    });
+    if (
+      !professorId ||
+      Boolean(Number(professorId < 1)) ||
+      Boolean(Number.isNaN(Number(professorId)))
+    ) {
+      navigate(`/courses/${courseId}/professors`);
+    } else {
+      getProfessorsTests(professorId).then((response) => {
+        setProfessorTests(response.data.tests);
+        setFilteredProfessorTests(response.data.tests);
+        setProfessorName(response.data.professor.toUpperCase());
+        setLoading(false);
+      });
+    }
   }, []);
 
   if (loading) return <Loading />;
@@ -61,11 +71,12 @@ function ProfessorTests() {
       />
       {filter
         ? filteredProfessorTests.map((type) => (
-            <PeriodSubjects info={type} key={type.period} complement="" />
+            <PeriodSubjects info={type} key={type.type} complement="" />
           ))
         : professorTests.map((type) => (
-            <PeriodSubjects info={type} key={type.period} complement="" />
+            <PeriodSubjects info={type} key={type.type} complement="" />
           ))}
+      <BottomButtons />
     </ProfessorsPage>
   );
 }
@@ -92,6 +103,10 @@ const Title = styled.p`
   @media (max-width: 600px) {
     font-size: 10vw;
     margin: 20% 0px 0px 0px;
+  }
+
+  @media (max-width: 400px) {
+    margin-top: 25%;
   }
 `;
 
