@@ -90,7 +90,6 @@ export default Professors;
 
 const ProfessorsPage = styled.main`
   width: 100%;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -108,6 +107,7 @@ const Title = styled.p`
   @media (max-width: 600px) {
     font-size: 10vw;
     margin: 20% 0px 0px 0px;
+    padding: 0px;
   }
 
   @media (max-width: 400px) {
@@ -129,13 +129,21 @@ const FilterSearch = styled.input`
 const CourseProfessors = styled.section`
   width: 100%;
   display: grid;
-  min-height: 100vw;
   grid-template-columns: repeat(4, 1fr);
-  gap: 6%;
+  gap: 0% 6%;
   margin-top: 5%;
   padding: 0px 5%;
 
+  @media (max-width: 800px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
   @media (max-width: 600px) {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 350px) {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 0%;
   }
 `;
