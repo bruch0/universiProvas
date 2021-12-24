@@ -19,7 +19,6 @@ function SubmitTest() {
   const [universityId, setUniversityId] = useState(0);
   const [courses, setCourses] = useState([]);
   const [chosenCourse, setChosenCourse] = useState('');
-  const [courseId, setCourseId] = useState(0);
   const [professors, setProfessors] = useState([]);
   const [chosenProfessor, setChosenProfessor] = useState('');
   const [subjects, setSubjects] = useState([]);
@@ -29,6 +28,7 @@ function SubmitTest() {
   const [testTypes, setTestType] = useState([]);
   const [chosenTestType, setChosenTestType] = useState('');
   const [testInfo, setTestInfo] = useState({
+    courseId: 0,
     professorId: 0,
     subjectId: 0,
     period: 0,
@@ -49,13 +49,13 @@ function SubmitTest() {
   const resetTestInfo = (includingCourse) => {
     if (includingCourse) {
       setChosenCourse('');
-      setCourseId(0);
     }
     setChosenProfessor('');
     setChosenSubject('');
     setChosenPeriod('');
     setChosenTestType('');
     setTestInfo({
+      courseId: includingCourse ? 0 : testInfo.courseId,
       professorId: 0,
       subjectId: 0,
       period: 0,
@@ -76,7 +76,7 @@ function SubmitTest() {
   }, [universityId]);
 
   useEffect(() => {
-    if (courseId) {
+    if (testInfo.courseId) {
       resetTestInfo(false);
       setChosenProfessor('');
       setChosenSubject('');
@@ -84,7 +84,7 @@ function SubmitTest() {
       setChosenTestType('');
 
       setLoading(true);
-      getPostTestInfo(courseId).then((response) => {
+      getPostTestInfo(testInfo.courseId).then((response) => {
         setProfessors(response.data.professors);
         setSubjects(response.data.subjects);
         setPeriods(response.data.availablePeriods);
@@ -92,10 +92,11 @@ function SubmitTest() {
         setLoading(false);
       });
     }
-  }, [courseId]);
+  }, [testInfo.courseId]);
 
   const onSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const fileType = testInfo.file?.type.split('/')[1];
     if (
@@ -110,6 +111,8 @@ function SubmitTest() {
     } else {
       const formData = new FormData();
       formData.append('file', testInfo.file);
+      formData.append('courseId', testInfo.courseId);
+      formData.append('professorId', testInfo.professorId);
       formData.append('professorId', testInfo.professorId);
       formData.append('subjectId', testInfo.subjectId);
       formData.append('typeId', testInfo.typeId);
@@ -136,7 +139,7 @@ function SubmitTest() {
       name: 'Curso',
       handler: (choice) => {
         setChosenCourse(choice.name);
-        setCourseId(choice.id);
+        setTestInfo({ ...testInfo, courseId: choice.id });
       },
       state: chosenCourse,
       possibleStates: courses,
