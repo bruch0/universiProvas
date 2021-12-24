@@ -87,12 +87,14 @@ const Dropdown = styled.button`
   }
 
   @media (max-width: 600px) {
-    font-size: 15px;
-
     svg {
       height: 15px;
       width: 15px;
     }
+  }
+
+  @media (max-width: 400px) {
+    font-size: 13px;
   }
 `;
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 
-function DropdownInput({ handler, possibleStates, state, name }) {
+function DropdownInput({ handler, possibleStates, state, name, disabled }) {
   const [enabled, setEnabled] = useState(false);
   const [filteredPossibleStates, setFilteredPossibleStates] = useState([]);
   const [filter, setFilter] = useState('');
@@ -17,7 +17,7 @@ function DropdownInput({ handler, possibleStates, state, name }) {
   };
 
   return (
-    <DropdownHolder>
+    <DropdownHolder disabled={disabled || 0}>
       <Dropdown enabled={enabled ? 1 : 0}>
         {enabled ? <IoIosArrowUp /> : <IoIosArrowDown />}
       </Dropdown>
@@ -56,6 +56,11 @@ const DropdownHolder = styled.div`
   width: 40%;
   position: relative;
   margin-bottom: 50px;
+  display: ${(props) => (props.disabled ? 'none' : '')};
+
+  @media (max-width: 1000px) {
+    width: 70%;
+  }
 
   @media (max-width: 600px) {
     width: 80%;
@@ -145,6 +150,8 @@ const FilterSearch = styled.input`
   margin: 0px;
   font-size: 20px;
   font-family: 'Quicksand';
+  overflow: hidden;
+  text-overflow: ellipsis;
   border-radius: 15px;
   border: 0px;
   cursor: pointer;
