@@ -94,8 +94,6 @@ function SubmitTest() {
     }
   }, [courseId]);
 
-  if (loading) return <Loading />;
-
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -185,6 +183,8 @@ function SubmitTest() {
       disabled: Boolean(!chosenPeriod),
     },
   ];
+
+  if (loading) return <Loading halfOpacity={1} />;
 
   return (
     <TestPage>
