@@ -8,10 +8,10 @@ function SelectorButton({ path, mainInfo, additionalInfo, hoverInfo, action }) {
   let hover;
 
   if (hoverInfo === '0') {
-	hover = 'Nenhuma prova';
+    hover = 'Nenhuma prova';
   } else {
-	hover =
-	Number(hoverInfo) > 1 ? `${hoverInfo} provas` : `${hoverInfo} prova`;
+    hover =
+      Number(hoverInfo) > 1 ? `${hoverInfo} provas` : `${hoverInfo} prova`;
   }
 
   return (
@@ -44,9 +44,10 @@ export default SelectorButton;
 
 const Button = styled(Link)`
   width: 100%;
+  min-width: 145px;
   height: 100px;
   padding: 15px 10px;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -58,6 +59,14 @@ const Button = styled(Link)`
   font-size: 18px;
   color: white;
   text-align: center;
+
+  @media (max-width: 600px) {
+    margin-bottom: 30px;
+  }
+
+  :active {
+    transform: translateY(3px);
+  }
 `;
 
 const FrontFace = styled.div`
