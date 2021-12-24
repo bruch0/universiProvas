@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 function WrongInfoLink() {
+  const [horizontalAnimation, setHorizontalAnimation] = useState(false);
+  const [verticalAnimation, setVerticalAnimation] = useState(false);
+  const [color, setColor] = useState(false);
+
+  setTimeout(() => setVerticalAnimation(true), 100);
+  setTimeout(() => setHorizontalAnimation(true), 500);
+  setTimeout(() => setColor(true), 1000);
   return (
     <Button
+      horizontalAnimation={horizontalAnimation ? 1 : 0}
+      verticalAnimation={verticalAnimation ? 1 : 0}
+      color={color ? 1 : 0}
       to=""
       onClick={() => window.open('https://www.linkedin.com/in/lucas-bruch/')}
     >
@@ -16,36 +26,23 @@ function WrongInfoLink() {
 export default WrongInfoLink;
 
 const Button = styled(Link)`
-  width: 250px;
-  height: 80px;
-  padding: 15px 10px;
+  width: ${(props) => (props.horizontalAnimation ? '240px' : '40px')};
+  height: ${(props) => (props.verticalAnimation ? '80px' : '0px')};
+  padding-top: ${(props) => (props.horizontalAnimation ? '40px' : '0px')};
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  background-color: #b28adb;
-  border-radius: 7px;
-  box-shadow: 0px 5px 5px rgba(171, 63, 188, 0.25);
+  background-color: #9d6cce;
+  border-radius: ${(props) =>
+    props.horizontalAnimation ? '7px 7px 0px 7px' : '7px 7px 0px 0px'};
   font-weight: 500;
-  font-size: 18px;
-  color: white;
+  font-size: 15px;
+  color: ${(props) => (props.color ? 'white' : 'transparent')};
   text-align: center;
+  transition: height 0.3s, width 0.3s, left 0.3s, color 0.2s;
   position: absolute;
-  top: 15px;
-  left: 15px;
+  bottom: 40px;
+  left: ${(props) => (props.horizontalAnimation ? '-200px' : '0px')};
   z-index: 3;
-
-  @media (max-width: 600px) {
-    width: 45%;
-    height: 50px;
-    font-size: 14px;
-    bottom: 15px;
-    left: 15px;
-    right: unset;
-    top: unset;
-  }
-
-  @media (max-width: 400px) {
-    left: 10px;
-  }
 `;

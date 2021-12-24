@@ -1,44 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 function SubmitTestLink() {
-  return <Button to="/tests">Quer contribuir? Adicione suas provas!</Button>;
+  const [horizontalAnimation, setHorizontalAnimation] = useState(false);
+  const [display, setDisplay] = useState(false);
+  const [color, setColor] = useState(false);
+
+  setTimeout(() => setDisplay(true), 499);
+  setTimeout(() => setHorizontalAnimation(true), 500);
+  setTimeout(() => setColor(true), 1000);
+  return (
+    <Button
+      disp={display ? 1 : 0}
+      horizontalAnimation={horizontalAnimation ? 1 : 0}
+      color={color ? 1 : 0}
+      to="/tests"
+    >
+      Quer contribuir? Adicione suas provas!
+    </Button>
+  );
 }
 
 export default SubmitTestLink;
 
 const Button = styled(Link)`
-  width: 250px;
-  height: 80px;
-  padding: 15px 10px;
+  width: ${(props) => (props.horizontalAnimation ? '240px' : '40px')};
+  height: 40px;
+  padding: 0px;
   display: flex;
+  visibility: ${(props) => (props.horizontalAnimation ? '' : 'hidden')};
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  background-color: #b28adb;
-  border-radius: 7px;
-  box-shadow: 0px 5px 5px rgba(171, 63, 188, 0.25);
+  background-color: #9d6cce;
+  border-radius: 7px 7px 0px 0px;
   font-weight: 500;
-  font-size: 18px;
-  color: white;
+  font-size: 15px;
+  color: ${(props) => (props.color ? 'white' : 'transparent')};
   text-align: center;
+  transition: height 0.2s, width 0.3s, left 0.3s, color 0.2s;
   position: absolute;
-  top: 105px;
-  left: 15px;
-  z-index: 3;
-
-  @media (max-width: 600px) {
-    width: 45%;
-    height: 50px;
-    font-size: 14px;
-    left: unset;
-    top: unset;
-    bottom: 15px;
-    right: 15px;
-  }
-
-  @media (max-width: 400px) {
-    right: 10px;
-  }
+  bottom: 80px;
+  left: ${(props) => (props.horizontalAnimation ? '-200px' : '0px')};
+  border-bottom: 1px solid #c3c3c3;
+  z-index: 4;
 `;
