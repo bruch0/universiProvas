@@ -99,7 +99,7 @@ const ProfessorsPage = styled.main`
 const Title = styled.p`
   font-size: 6vw;
   margin: 30px 0px 0px 0px;
-  padding: 0px 10%;
+  padding: 0px 15%;
   font-weight: 700;
   text-align: center;
 

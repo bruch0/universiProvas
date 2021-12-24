@@ -112,8 +112,6 @@ const Dropdown = styled.button`
   }
 
   @media (max-width: 600px) {
-    font-size: 15px;
-
     svg {
       height: 15px;
       width: 15px;
@@ -193,16 +191,28 @@ const FilterSearch = styled.input`
   ::-webkit-input-placeholder {
     color: #000000;
     font-weight: 700;
+
+    @media (max-width: 400px) {
+      font-size: 13px;
+    }
   }
 
   :-ms-input-placeholder {
     color: #000000;
     font-weight: 700;
+
+    @media (max-width: 400px) {
+      font-size: 13px;
+    }
   }
 
   ::placeholder {
     color: #000000;
     font-weight: 700;
+
+    @media (max-width: 400px) {
+      font-size: 13px;
+    }
   }
 `;
 

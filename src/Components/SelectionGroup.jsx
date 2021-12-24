@@ -38,7 +38,6 @@ export default SelectionGroup;
 const Period = styled.section`
   width: 100%;
   padding: 0px 5%;
-  min-height: 100vw;
   margin-top: 30px;
   font-size: 30px;
   font-weight: 500;
@@ -48,11 +47,20 @@ const UniversityCourses = styled.section`
   width: 100%;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 6%;
+  gap: 0% 6%;
   margin-top: 2%;
   padding: 0px;
 
+  @media (max-width: 800px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
   @media (max-width: 600px) {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 350px) {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 0%;
   }
 `;

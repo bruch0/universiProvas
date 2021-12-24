@@ -96,17 +96,29 @@ const ProfessorsPage = styled.main`
 const Title = styled.p`
   font-size: 6vw;
   margin: 30px 0px 0px 0px;
-  padding: 0px 10%;
+  padding: 0px 15%;
   font-weight: 700;
   text-align: center;
 
+  @media (max-width: 1150px) {
+    padding: 0px 20%;
+    font-size: 5vw;
+  }
+
+  @media (max-width: 850px) {
+    font-size: 4vw;
+    padding: 0px 25%;
+  }
+
   @media (max-width: 600px) {
-    font-size: 10vw;
-    margin: 20% 0px 0px 0px;
+    font-size: 6vw;
+    padding: 0px 10%;
+    margin: 80px 0px 0px 0px;
   }
 
   @media (max-width: 400px) {
     margin-top: 25%;
+    margin: 90px 0px 0px 0px;
   }
 `;
 
@@ -119,4 +131,8 @@ const FilterSearch = styled.input`
   font-family: 'Quicksand';
   border-radius: 15px;
   border: 0px;
+
+  @media (max-width: 850px) {
+    margin: 10% 0px 0px 0px;
+  }
 `;

@@ -114,12 +114,21 @@ const UniversityCourses = styled.section`
   width: 100%;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 6%;
+  gap: 0% 6%;
   margin-top: 5%;
   padding: 0px 5%;
 
+  @media (max-width: 800px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
   @media (max-width: 600px) {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 350px) {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 0%;
   }
 `;
 
