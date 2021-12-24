@@ -8,7 +8,9 @@ const multiFormConfig = {
 
 const api = axios.create({
   baseURL:
-    process.env.NODE_ENV === 'production' ? 'https://universiprovas.herokuapp.com/' : 'http://localhost:4000/',
+    process.env.NODE_ENV === 'production'
+      ? 'https://universiprovas.herokuapp.com/'
+      : 'http://localhost:4000/',
 });
 
 const getUniversities = () => api.get('/universities');
@@ -27,7 +29,7 @@ const getCourseSubjects = (universityId, courseId) =>
 const getSubjectTests = (universityId, subjectId) =>
   api.get(`/subjects/${universityId}/${subjectId}/tests`);
 
-const getPostTestInfo = () => api.get('/tests');
+const getPostTestInfo = (courseId) => api.get(`/tests/${courseId}`);
 
 const uploadTest = (data) => api.post('/tests', data, multiFormConfig);
 
