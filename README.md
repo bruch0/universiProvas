@@ -96,12 +96,14 @@ The app will automatically start at localhost:3000 on your favorite browser
 
 </br>
 
-## Fully supported universities (all courses, all professors)
+## Supported universities
 
-## Partially supported universities (some courses, all professors)
+### Fully supported (all courses, all professors)
+
+### Partially supported (some courses, all professors)
 
 - [x] UFSC - Universidade Federal de Santa Catarina
 - [x] UFMG - Universidade Federal de Minas Gerais
 
-## There are still 56 universities to add, the goal is to initially support every federal college in Brazil
+#### There are still 56 universities to add, the goal is to initially support every federal college in Brazil
 
