@@ -15,7 +15,6 @@
  <a href="#deployment">Deployment</a> • 
  <a href="#features">Features</a> • 
  <a href="#how-to-run">How to run</a> • 
- <a href="#tech-stack">Tech Stack</a> • 
  <a href="#supported-universities">Supported universities</a>
 </p>
 
@@ -97,7 +96,12 @@ The app will automatically start at localhost:3000 on your favorite browser
 
 </br>
 
+## Fully supported universities (all courses, all professors)
 
-<h2 align="center">
-  Supported universities
-</h2>
+## Partially supported universities (some courses, all professors)
+
+- [x] UFSC - Universidade Federal de Santa Catarina
+- [x] UFMG - Universidade Federal de Minas Gerais
+
+## There are still 56 universities to add, the goal is to initially support every federal college in Brazil
+
