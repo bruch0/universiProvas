@@ -1,5 +1,5 @@
 <h1 align="center">
-  UniversiProvas 📝
+  UniversiProvas
 </h1>
 
 <h3 align="center">
@@ -28,7 +28,7 @@
 
 </br>
 
-## About ❔
+## About
 
 UniversiProvas is an exam repository! Sign in and send some of your college exams to get credits and start downloading the ones you need!
 
@@ -38,13 +38,13 @@ um gif da aplicação bem maneiro -->
 
 </br>
 
-## Deployment 🚀
+## Deployment
 
 <p align="center"><a  href="https://universiprovas.vercel.app/">Check it here!</a></p>
 
 </br>
 
-## Features ✅
+## Features
 
 - [ ] register and log into the page
 - [ ] see your credits
@@ -60,7 +60,7 @@ um gif da aplicação bem maneiro -->
 
 </br>
 
-## How to run 🏃‍♀️💨
+## How to run
 
 ```
 This project relies on another repository, which will run the server locally.
@@ -99,5 +99,5 @@ The app will automatically start at localhost:3000 on your favorite browser
 
 
 <h2 align="center">
-  Supported universities 🎓
+  Supported universities
 </h2>
